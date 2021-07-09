@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CostController;
 use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 
 /*
@@ -15,9 +17,12 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 |
 */
 
+Route::get('/', function () {
+    return view('frontend.layouts.master');
+});
 Route::get('/admin', function () {
     return view('backend.layouts.dashboard');
-})->middleware('auth:admin');
+})->name('dashboard')->middleware('auth:admin');
 
 Route::prefix('admin')->name('admin.')->group(function(){
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('loginForm');
@@ -26,10 +31,18 @@ Route::prefix('admin')->name('admin.')->group(function(){
 });
 
 //income routes
-Route::prefix('income')->group(function(){
-    Route::get('/view',[IncomeController::class, 'view'])->name('income.view');
-    Route::get('/add',[IncomeController::class, 'add'])->name('income.add');
-    Route::post('/store',[IncomeController::class, 'store'])->name('income.store');
+Route::prefix('admin')->group(function(){
+    Route::get('/income/view',[IncomeController::class, 'view'])->name('income.view');
+    Route::get('/income/add',[IncomeController::class, 'add'])->name('income.add');
+    Route::post('/income/store',[IncomeController::class, 'store'])->name('income.store');
+    //cost route
+    Route::get('/cost/view',[CostController::class, 'view'])->name('cost.view');
+    Route::get('/cost/add',[CostController::class, 'add'])->name('cost.add');
+    Route::post('/cost/store',[CostController::class, 'store'])->name('cost.store');
+     //investor route
+     Route::get('/investor/view',[InvestorController::class, 'view'])->name('investor.view');
+     Route::get('/investor/add',[InvestorController::class, 'add'])->name('investor.add');
+     Route::post('/investor/store',[InvestorController::class, 'store'])->name('investor.store');
 });
 
 

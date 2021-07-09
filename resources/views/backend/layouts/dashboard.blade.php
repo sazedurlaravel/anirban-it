@@ -23,7 +23,17 @@
       <!-- small box -->
       <div class="small-box bg-info">
         <div class="inner">
-          <h3>৬০০০০০/-  </h3>
+          @php
+              $incomes =App\Models\Income::all();
+              foreach($incomes as $income){
+                $TotalIncome = $income->sum('amount');
+              }
+          @endphp
+          @if (@$TotalIncome)
+          <h3>{{@$TotalIncome}}/-  </h3>
+          @else 
+          <h3>0.00/-  </h3>
+          @endif
 
           <p>মোট আয় </p>
         </div>
@@ -38,7 +48,18 @@
       <!-- small box -->
       <div class="small-box bg-success">
         <div class="inner">
-          <h3>৬০০০০০/-  </h3>
+          @php
+          $costs =App\Models\Cost::all();
+          foreach($costs as $cost){
+            $Totalcost = $cost->sum('amount');
+          }
+      @endphp
+        @if (@$Totalcost)
+            <h3>{{@$Totalcost}}/-  </h3>
+        @else 
+        <h3>0.00/-  </h3>
+        @endif
+          
 
           <p>মোট ব্যয় </p>
         </div>
@@ -55,7 +76,10 @@
       <!-- small box -->
       <div class="small-box bg-warning">
         <div class="inner">
-          <h3>৪৫০০/- </h3>
+          @php
+              @$balance = (double)$TotalIncome - (double)$Totalcost;
+          @endphp
+          <h3>{{@$balance}}/- </h3>
 
           <p>বর্তমান ব্যালেন্স</p>
         </div>

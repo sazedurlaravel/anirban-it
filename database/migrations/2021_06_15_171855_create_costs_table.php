@@ -20,6 +20,7 @@ class CreateCostsTable extends Migration
             $table->string('month');
             $table->string('year');
             $table->double('amount');
+            $table->string('person')->nullable();
             $table->string('recept')->nullable();
             $table->timestamps();
         });
